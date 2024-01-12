@@ -1,0 +1,164 @@
+<?php
+require("dbconnect.php");
+?
+
+<?php
+
+$existingName = "Lewis Nge";
+$existingEmail = "lewisng@gmail.com";
+$existingLocation = "Kigali, Nyarugenge";
+$existingPhone = "0784858888";
+$existingFarmer = "Beans and coffee";
+
+// Handle Edit Profile form submission
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["saveProfileChanges"])) {
+    // Retrieve edited profile information
+    $newName = $_POST["newName"];
+    $newEmail = $_POST["newEmail"];
+    $newLocation = $_POST["newLocation"];
+    $newPhone = $_POST["newPhone"];
+    $newFarmer = $_POST["newFarmer"];
+
+    // Update the user's profile information in the database
+    // Replace the following with your actual database update logic
+    // Use prepared statements to prevent SQL injection
+
+    // Example using MySQLi (you need to adapt this to your actual connection method)
+    // $conn->query("UPDATE useraccount SET full_name='$newName', email='$newEmail', location='$newLocation', phone='$newPhone', farmer='$newFarmer' WHERE user_id=1");
+
+    // Assuming the update was successful
+    // Redirect the user or perform other actions as needed
+    header("Location: profile.html");
+    exit();
+}
+?>
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="profile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>User Profile</title>
+</head>
+<body>
+    <div class="sliderbar">
+        <div class="log"></div>
+        <ul class="main">
+            <li class="active">
+                <a href="dashboard30.html">
+                <i class="fas fa-tachometer-alt"></i>
+                <span>Dashboard</span></a>
+            </li>
+            <li>
+                <a href="profile.html">
+                <i class="fas fa-user"></i>
+                <span>Profile</span>
+                </a>
+            </li>
+            <!-- Add more menu items as needed -->
+        </ul>
+    </div>
+    <div class="maincontent">
+        <div class="headerwrapper">
+            <div class="headertitle">
+                <span>User</span>
+                <h2>dashboard</h2>
+            </div>
+            <div class="userinformation">
+                <div class="searchbox">
+                    <i class="fa-solid fa-search"></i>
+                    <input type="text" placeholder="Search">
+                </div>
+                <img src="profile.jpg" alt="">
+            </div>
+        </div>
+   
+        <header>
+            <h1>User Profile</h1>
+        </header>
+        <main>
+            <section class="profile">
+                <div class="profile-image">
+                    <img src="profile.jpg" alt="User's Profile Image">
+                </div>
+                <div class="profile-info" id="profileInfo">
+                    <h2>Lewis Nge</h2>
+                    <p>Email: lewisng@gmail.com</p>
+                    <p>Location: Kigali, Nyarugenge</p>
+                    <p>Phone Number: 0784858888</p>
+                    <p>Farmer: Beans and coffee</p>
+                    <!-- Add more user information here -->
+                </div>
+            </section>
+            <section class="actions">
+                <h2>Actions</h2>
+                <button id="editProfile">Edit Profile</button>
+                <button id="changePassword">Change Password</button>
+            </section>
+
+            <!-- Form for editing profile (initially hidden) -->
+            <form id="editProfileForm" style="display:none">
+                <!-- Add input fields for the user to edit -->
+                <label for="newName">Name:</label>
+                <input type="text" id="newName" name="newName" placeholder="Enter your name">
+                
+                <label for="newEmail">Email:</label>
+                <input type="text" id="newEmail" name="newEmail" placeholder="Enter your email">
+
+                <label for="newLocation">Location:</label>
+                <input type="text" id="newLocation" name="newLocation" placeholder="Enter your location">
+
+                <label for="newPhone">Phone Number:</label>
+                <input type="text" id="newPhone" name="newPhone" placeholder="Enter your phone number">
+
+                <label for="newFarmer">Farmer:</label>
+                <input type="text" id="newFarmer" name="newFarmer" placeholder="Enter your farmer information">
+                
+                <!-- Add more input fields as needed -->
+
+                <button type="button" onclick="saveProfileChanges()">Save Changes</button>
+            </form>
+        </main>
+        <script>
+            // JavaScript code for profile editing
+
+            document.getElementById('editProfile').addEventListener('click', function () {
+                // Hide profile info, show edit form
+                document.getElementById('profileInfo').style.display = 'none';
+                document.getElementById('editProfileForm').style.display = 'block';
+            });
+
+            function saveProfileChanges() {
+                // Get values from the form fields
+                var newName = document.getElementById('newName').value;
+                var newEmail = document.getElementById('newEmail').value;
+                var newLocation = document.getElementById('newLocation').value;
+                var newPhone = document.getElementById('newPhone').value;
+                var newFarmer = document.getElementById('newFarmer').value;
+
+                // Update the profile info with the new values
+                document.getElementById('profileInfo').style.display = 'block';
+                document.getElementById('editProfileForm').style.display = 'none';
+
+                // Update the profile info with the new values
+                document.getElementById('profileInfo').innerHTML = `
+                    <h2>${newName}</h2>
+                    <p>Email: ${newEmail}</p>
+                    <p>Location: ${newLocation}</p>
+                    <p>Phone Number: ${newPhone}</p>
+                    <p>Farmer: ${newFarmer}</p>
+                    <!-- Add more user information here -->
+                `;
+            }
+        </script>
+    </div>
+    <script src="form.js"></script>
+</body>
+</html>
